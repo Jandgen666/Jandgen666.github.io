@@ -1,0 +1,43 @@
+<h1 class="page-header">{{title}}</h1>
+<div class="list-group">
+  <a ng-repeat="movie in movies track by $index" href="#/detail/{{movie.id}}" class="list-group-item">
+    <div class="media">
+      <div class="media-left">
+        <img class="media-object" ng-src="{{movie.images.small}}" alt="{{movie.alt}}">
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">{{movie.title}}</h4>
+        <p>类型: <span>{{movie.genres.toString()}}</span> </p>
+        <p>导演: <span ng-repeat="director in movie.directors">{{director.name + ($last?'':'、')}}</span></p>
+        <p>主演: <span ng-repeat="cast in movie.casts">{{cast.name + ($last?'':'、')}}</span></p>
+      </div>
+    </div>
+  </a>
+</div>
+
+<div class="loading" ng-show="loading">
+  <div class="spinner">
+    <div class="dot1"></div>
+    <div class="dot2"></div>
+  </div>
+</div>
+
+<nav ng-show="!loading">
+  <ul class="pagination pagination-lg">
+
+    <li  ng-class="{disabled:page <= 1}">
+      <a ng-click="go(page -1 )" aria-label="Next">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+
+    <li ng-class="{active:($index+1)==page}" ng-repeat="item in pageArr track by $index"><a ng-click="go($index+1)">{{$index+1}}</a></li>
+
+    <li  ng-class="{disabled:page >= totalPage}">
+      <a ng-click="go(page + 1)" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+
+  </ul>
+</nav>
